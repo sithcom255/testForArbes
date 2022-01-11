@@ -33,5 +33,11 @@ public class NumberRecord {
         price = price.add(BigDecimal.valueOf((minutes) * 0.5));
     }
 
+    public boolean isGreater(NumberRecord other) {
+        if(this.getPrice().compareTo(other.getPrice()) == 1){
+            return true;
+        } else return this.getPrice().compareTo(other.getPrice()) == 0 && this.getNumber() > other.getNumber();
+    }
+
 
 }

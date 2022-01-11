@@ -28,10 +28,36 @@ public class NumberRecord {
             minutes = 5;
         }
 
+        //this should be in constants or enum elsewhere
         LocalTime highPriceEnd = LocalTime.of(16, 0, 0);
         LocalTime highPriceStart = LocalTime.of(8, 0, 0);
 
-        price = price.add(BigDecimal.valueOf((minutes) * 0.5));
+        if(start.toLocalTime().isBefore(highPriceStart.minusMinutes(5))) {
+            price = price.add(BigDecimal.valueOf((minutes) * 0.5));
+        } else if (start.toLocalTime().isBefore(highPriceStart)) {
+            long minutesToHigh = (long) Math.ceil(Duration.between(start.toLocalTime(), highPriceStart).toSeconds() / 60.0);
+            if(minutes < minutesToHigh) {
+                price = price.add(BigDecimal.valueOf((minutes) * 0.5));
+            } else {
+                price = price.add(BigDecimal.valueOf((minutesToHigh) * 0.5));
+                minutes -= minutesToHigh;
+                price = price.add(BigDecimal.valueOf(minutes));
+            }
+        } else if (start.toLocalTime().isBefore(highPriceEnd.minusMinutes(5))) {
+            price = price.add(BigDecimal.valueOf(minutes));
+        } else if (start.toLocalTime().isBefore(highPriceEnd)) {
+            long minutesToLow = (long) Math.ceil(Duration.between(start.toLocalTime(), highPriceEnd).toSeconds() / 60.0);
+
+            if(minutes < minutesToLow) {
+                price = price.add(BigDecimal.valueOf(minutes));
+            } else {
+                price = price.add(BigDecimal.valueOf(minutesToLow));
+                minutes -= minutesToLow;
+                price = price.add(BigDecimal.valueOf((minutes) * 0.5));
+            }
+        } else {
+            price = price.add(BigDecimal.valueOf((minutes) * 0.5));
+        }
     }
 
     public boolean isGreater(NumberRecord other) {

@@ -54,8 +54,8 @@ public class NumberRecordTest {
     @Test
     public void callBeforeHigh() {
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        LocalDateTime start = LocalDateTime.parse("13-01-2020 0:58:15", formatter);
-        LocalDateTime end = LocalDateTime.parse("13-01-2020 1:01:15", formatter);
+        LocalDateTime start = LocalDateTime.parse("13-01-2020 00:58:15", formatter);
+        LocalDateTime end = LocalDateTime.parse("13-01-2020 01:01:15", formatter);
 
         NumberRecord callRecord = new NumberRecord(1);
         callRecord.addCall(start, end);
@@ -84,7 +84,7 @@ public class NumberRecordTest {
         NumberRecord callRecord = new NumberRecord(1);
         callRecord.addCall(start, end);
 
-        checkCallRecord(callRecord, BigDecimal.valueOf(1.5), Duration.ofSeconds(180));
+        checkCallRecord(callRecord, BigDecimal.valueOf(3), Duration.ofSeconds(180));
     }
 
 

@@ -1,7 +1,6 @@
 package com.phonecompany.billing.pojos;
 
 import org.assertj.core.api.SoftAssertions;
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -25,7 +24,7 @@ public class NumberRecordTest {
         NumberRecord callRecord = new NumberRecord(1);
         callRecord.addCall(start, end);
 
-        checkCallRecord(callRecord, BigDecimal.valueOf(1), Duration.ofSeconds(162));
+        checkCallRecord(callRecord, BigDecimal.valueOf(1.0), Duration.ofSeconds(162));
     }
 
     private void checkCallRecord(NumberRecord record, BigDecimal price, Duration duration) {

@@ -1,12 +1,20 @@
 package com.phonecompany.billing.pojos;
 
-import junit.framework.TestCase;
+import org.assertj.core.api.SoftAssertions;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class NumberRecordTest extends TestCase {
 
+public class NumberRecordTest {
+
+    private final SoftAssertions softAssertions = new SoftAssertions();
+
+    @Test
     public void calculateCallPriceValid() {
         String startS = "13-01-2020 18:10:15";
         String endS = "13-01-2020 18:12:57";
@@ -14,7 +22,15 @@ public class NumberRecordTest extends TestCase {
 
         LocalDateTime start = LocalDateTime.parse(startS, formatter);
         LocalDateTime end = LocalDateTime.parse(endS, formatter);
-        NumberRecord numberRecord = new NumberRecord(1);
-        numberRecord.addCall(start, end);
+        NumberRecord callRecord = new NumberRecord(1);
+        callRecord.addCall(start, end);
+
+        checkCallRecord(callRecord, BigDecimal.valueOf(1), Duration.ofSeconds(162));
+    }
+
+    private void checkCallRecord(NumberRecord record, BigDecimal price, Duration duration) {
+        softAssertions.assertThat(record.getPrice()).isEqualTo(price);
+        softAssertions.assertThat(record.getTimeInCall()).isEqualTo(duration);
+        softAssertions.assertAll();
     }
 }

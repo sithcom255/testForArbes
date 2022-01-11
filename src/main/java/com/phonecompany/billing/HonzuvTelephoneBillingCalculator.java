@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
+/**
+ * there is some javadoc missing ahead of you
+ */
 public class HonzuvTelephoneBillingCalculator implements TelephoneBillCalculator {
 
     Long maxNumber = 0l;

@@ -84,7 +84,7 @@ public class NumberRecordTest {
         NumberRecord callRecord = new NumberRecord(1);
         callRecord.addCall(start, end);
 
-        checkCallRecord(callRecord, BigDecimal.valueOf(3), Duration.ofSeconds(180));
+        checkCallRecord(callRecord, BigDecimal.valueOf(3.0), Duration.ofSeconds(180));
     }
 
 

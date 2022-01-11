@@ -9,12 +9,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalUnit;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Getter
 @Setter
 public class NumberRecord {
-    private final int number;
+    private final long number;
     private BigDecimal price = BigDecimal.valueOf(0);
     private Duration timeInCall = Duration.ofSeconds(0);
 
@@ -34,6 +35,9 @@ public class NumberRecord {
     }
 
     public boolean isGreater(NumberRecord other) {
+        if(Objects.isNull(other)) {
+            return true;
+        }
         if(this.getPrice().compareTo(other.getPrice()) == 1){
             return true;
         } else return this.getPrice().compareTo(other.getPrice()) == 0 && this.getNumber() > other.getNumber();

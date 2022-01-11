@@ -11,8 +11,8 @@ import java.util.TreeMap;
 
 public class HonzuvTelephoneBillingCalculator implements TelephoneBillCalculator {
 
-    Integer maxNumber = null;
-    Map<Integer, NumberRecord> numbers = new TreeMap<>();
+    Long maxNumber = 0l;
+    Map<Long, NumberRecord> numbers = new TreeMap<>();
 
     @Override
     public BigDecimal calculate(String phoneLog) {
@@ -25,7 +25,7 @@ public class HonzuvTelephoneBillingCalculator implements TelephoneBillCalculator
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-        int number = Integer.parseInt(recordValues[0]);
+        long number = Long.parseLong(recordValues[0]);
         LocalDateTime start = LocalDateTime.parse(recordValues[1], formatter);
         LocalDateTime end = LocalDateTime.parse(recordValues[2], formatter);
 
@@ -47,7 +47,7 @@ public class HonzuvTelephoneBillingCalculator implements TelephoneBillCalculator
         if(!Objects.isNull(maxNumber)) {
             numbers.remove(maxNumber);
         }
-        for (Map.Entry<Integer, NumberRecord> entry: numbers.entrySet()) {
+        for (Map.Entry<Long, NumberRecord> entry: numbers.entrySet()) {
             finalPrice = finalPrice.add(entry.getValue().getPrice());
         }
         return finalPrice;
